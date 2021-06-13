@@ -1,10 +1,9 @@
 ﻿#pragma once
 #include "sha1.h"
-
 #include <string.h>
-
-#define LOGINLENGTH  10  // Зафикируем длину имени
-#define SIZE 10
+#include<iostream>
+#define LOGINLENGTH  10  // Зафиксируем длину имени
+//#define SIZE 10
 
 
 class HashTable { // хэш таблица
@@ -12,12 +11,15 @@ public:
 
 	HashTable();
 	~HashTable();
-	void registration(char login[LOGINLENGTH], char password[], int passwordLenght);
-	void registrationInner(char login[LOGINLENGTH], uint* digest);
-	void deletingRegistered(char login[LOGINLENGTH]);
+	void registration(char login[LOGINLENGTH], char password[], int passwordLenght);// регистрация пользователя
+	void registrationInner(char login[LOGINLENGTH], uint* digest);// внутрення функция регистрации пользователя
+	void deletingRegistered(char login[LOGINLENGTH]);// удаление пользователя
+	bool comparisonLogin(char login[LOGINLENGTH], char password[], int passwordLenght);// проверка логина и пароля
+	void showLogin();// выод логинов на экран
+
 private:
 
-	enum enPairStatus {
+	enum  enPairStatus {   // статусы логинов
 		free,
 		engaged,
 		deleted
@@ -25,7 +27,7 @@ private:
 
 	struct Pair { // пара логин-пароль
 
-		Pair() : _login(""), _pass_sha1_hash(0), _status(enPairStatus::free)
+		Pair() : _login(""), _pass_sha1_hash(0), _status(enPairStatus::free)  // изначально всё пусто
 		{}
 		~Pair()
 		{
@@ -58,17 +60,17 @@ private:
 				(_status != enPairStatus::engaged || (!memcmp(_pass_sha1_hash, other._pass_sha1_hash, SHA1HASHLENGTHBYTES) && !strcmp(_login, other._login)));
 		}
 
-		char _login[LOGINLENGTH];
-		uint* _pass_sha1_hash;
+		char _login[LOGINLENGTH];  // хранение логина
+		uint* _pass_sha1_hash;     // хэш пароля
 
-		enPairStatus _status;
+		enPairStatus _status;       // статус ячейки массива логинов-пароля
 	};
 
-	void resize();
-	int hashFunction(char login[LOGINLENGTH], int step);
+	
+	int hashFunction(char login[LOGINLENGTH], int step); // поиск индекса для логина
+	void resize();                                        // изменение размера массива пар логин-пароль 
 
-
-	Pair* _arrayData;
-	int _memSize;
-	int _countLogin;
+	Pair* _arrayData;  // массив пар логин-пароль
+	int _memSize;       // размер массива пар логин-пароль
+	int _countLogin;    // количество пользователей 
 };

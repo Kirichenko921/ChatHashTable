@@ -52,7 +52,7 @@ uint* sha1(char* message, uint msize_bytes) {
 
 	ExpendBlock exp_block;
 	//раунды поехали
-	for (int i = 0; i < totalBlockCount; i++) {
+	for (unsigned int i = 0; i < totalBlockCount; i++) {
 
 		// берем текущий блок и дополняем его
 		unsigned char* cur_p = newMessage + one_block_size_bytes * i;

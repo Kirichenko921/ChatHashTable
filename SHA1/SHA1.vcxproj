@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClCompile Include="chat.cpp" />
     <ClCompile Include="sha1.cpp" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
